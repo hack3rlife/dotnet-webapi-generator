@@ -54,18 +54,18 @@ steps:
   inputs:
     script: |
       
-      #cd tmp
-      #git init -b main
-      #git config --global user.email "${{parameters.Email}}"
-      #git config --global user.name "${{parameters.UserName}}"
-      #git add .
-      #git commit -m "Innitial Commit"
+      cd tmp
+      git init -b main
+      git config --global user.email "${{parameters.Email}}"
+      git config --global user.name "${{parameters.UserName}}"
+      git add .
+      git commit -m "Innitial Commit"
       
       curl -u ${{parameters.UserName}} -H "Authorization: token ${{parameters.PAT}}" -d '{"name":"${{parameters.RepoName}}","private":false}' https://api.github.com/${{parameters.UserName}}/repos
-
-      #git remote add origin https://${{parameters.UserName}}:${{parameters.PAT}}@github.com/${{parameters.RepoName}}.git
+      echo ""
+      git remote add origin https://${{parameters.UserName}}:${{parameters.PAT}}@github.com/${{parameters.RepoName}}.git
       
-      #git push -u origin main
+      git push -u origin main
 
 
 
