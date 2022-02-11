@@ -19,11 +19,11 @@ parameters:
     type: string
   
   - name: Email
-    displayName: "WebAPI Name. (e.g.: BlogWebAPI)"
+    displayName: "Github Email"
     type: string
 
   - name: UserName
-    displayName: "WebAPI Name. (e.g.: BlogWebAPI)"
+    displayName: "Github UserName"
     type: string
 steps:
 - script: echo Creating a new WebAPI for ${{parameters.WebApiName}}!
