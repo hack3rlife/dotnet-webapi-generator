@@ -28,6 +28,6 @@ steps:
   inputs:
     command: 'custom'
     custom: 'new'
-    arguments: 'CleanArchitectureNetCoreWebAPI -n tmp\${{parameters.name}} --force'
+    arguments: 'CleanArchitectureNetCoreWebAPI -n tmp/${{parameters.name}} --force'
 
 
