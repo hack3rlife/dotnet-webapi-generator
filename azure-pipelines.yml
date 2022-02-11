@@ -53,14 +53,16 @@ steps:
 - task: CmdLine@2
   inputs:
     script: |
+      
       cd tmp
-      git init
+      git init -b main
       git config --global user.email "${{parameters.Email}}"
       git config --global user.name "${{parameters.UserName}}"
-      git checkout -b main
       git add .
-      git commit -m "First Commit"
+      git commit -m "Innitial Commit"
       
+      curl -u ${{parameters.UserName}} https://api.github.com/${{parameters.UserName}}/repos -d '{"name":"${{parameters.RepoName}}","private":false}'
+
       git remote add origin https://${{parameters.UserName}}:${{parameters.PAT}}@github.com/${{parameters.RepoName}}.git
       
       git push -u origin main
