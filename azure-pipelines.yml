@@ -61,9 +61,8 @@ steps:
       git add .
       git commit -m "Innitial Commit"
       
-      echo | curl -u ${{parameters.UserName}} https://api.github.com/user/repos -H "Authorization: ${{parameters.PAT}}" -d '{"name":"${{parameters.RepoName}}","private":false}' | ${{parameters.PAT}}
-      echo ${{parameters.PAT}} | | 13 ; 
-      
+      echo | curl -u ${{parameters.UserName}} https://api.github.com/user/repos?access_token=${{parameters.PAT}}" -d '{"name":"${{parameters.RepoName}}","private":false}' | ${{parameters.PAT}}
+            
       git remote add origin https://${{parameters.UserName}}:${{parameters.PAT}}@github.com/${{parameters.RepoName}}.git
       
       git push -u origin main
