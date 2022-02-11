@@ -63,7 +63,7 @@ steps:
       
       echo ${{parameters.PAT}} | curl -u ${{parameters.UserName}} https://api.github.com/user/repos -d '{"name":"${{parameters.RepoName}}","private":false}'
 
-      git remote add origin https://${{parameters.UserName}}:${{parameters.PAT}}@github.com/${{parameters.RepoName}}.git
+      git remote add origin https://${{parameters.UserName}}:${{parameters.PAT}}@github.com/${{parameters.UserName}}/${{parameters.RepoName}}.git
       
       git push -u origin main
 
