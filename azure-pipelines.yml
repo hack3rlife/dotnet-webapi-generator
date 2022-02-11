@@ -52,9 +52,12 @@ steps:
       git init
       git config --global user.email "${{parameters.Email}}"
       git config --global user.name "${{parameters.UserName}}"
-      git remote add origin git@github.com:hack3rlife/${{parameters.RepoName}}.git
+      git checkout -b main
       git add .
       git commit -m "First Commit"
+      
+      git remote add origin git@github.com:${{parameters.UserName}}/${{parameters.RepoName}}.git
+      
       git push -u origin main
 
 
