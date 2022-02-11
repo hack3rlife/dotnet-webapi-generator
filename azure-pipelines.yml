@@ -13,18 +13,22 @@ parameters:
   - name: WebApiName
     displayName: "WebAPI Name. (e.g.: BlogWebAPI)"
     type: string
+    default: Hack3rLife
 
   - name: RepoName
     displayName: "Repository Name"
     type: string
+    default: dotnet-webapi
   
   - name: Email
     displayName: "Github Email"
     type: string
+    default: hack3rlifeio@gmail.com
 
   - name: UserName
     displayName: "Github UserName"
     type: string
+    default: hack3rlife
 steps:
 - script: echo Creating a new WebAPI for ${{parameters.WebApiName}}!
   displayName: 'Run a one-line script'
