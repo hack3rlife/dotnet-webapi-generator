@@ -29,6 +29,11 @@ parameters:
     displayName: "Github UserName"
     type: string
     default: hack3rlife
+   
+  - name: PAT
+    displayName: "Github Personal Access Token"
+    type: string
+    
 steps:
 - script: echo Creating a new WebAPI for ${{parameters.WebApiName}}!
   displayName: 'Run a one-line script'
@@ -56,7 +61,7 @@ steps:
       git add .
       git commit -m "First Commit"
       
-      git remote add origin git@github.com:${{parameters.UserName}}/${{parameters.RepoName}}.git
+      git remote add origin https://${{parameters.UserName}}:${{parameters.PAT}}@github.com/${{parameters.RepoName}}.git
       
       git push -u origin main
 
