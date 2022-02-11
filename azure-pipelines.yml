@@ -21,6 +21,7 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'custom'
-    custom: 'dotnet new --install Hack3rlife.ASP.NETCore.WebAPI -n ${{parameters.name}}'
+    custom: 'new'
+    arguments: '--install Hack3rlife.ASP.NETCore.WebAPI -n ${{parameters.name}}'
 
 
