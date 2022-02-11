@@ -10,15 +10,23 @@ pool:
   vmImage: ubuntu-latest
 
 parameters:
-  - name: Name
+  - name: WebApiName
     displayName: "WebAPI Name. (e.g.: BlogWebAPI)"
     type: string
-  - name: reponame
+
+  - name: RepoName
     displayName: "Repository Name"
     type: string
+  
+  - name: Email
+    displayName: "WebAPI Name. (e.g.: BlogWebAPI)"
+    type: string
 
+  - name: UserName
+    displayName: "WebAPI Name. (e.g.: BlogWebAPI)"
+    type: string
 steps:
-- script: echo Creating a new WebAPI for ${{parameters.name}}!
+- script: echo Creating a new WebAPI for ${{parameters.WebApiName}}!
   displayName: 'Run a one-line script'
 
 - task: DotNetCoreCLI@2
@@ -31,17 +39,19 @@ steps:
   inputs:
     command: 'custom'
     custom: 'new'
-    arguments: 'CleanArchitectureNetCoreWebAPI -n ${{parameters.name}} -o tmp --force'
+    arguments: 'CleanArchitectureNetCoreWebAPI -n ${{parameters.WebApiName}} -o tmp --force'
 
 - task: CmdLine@2
   inputs:
     script: |
       cd tmp
       git init
-      git remote add origin git@github.com:hack3rlife/${{parameters.reponame}}.git
+      git config --global user.email "${{parameters.Email}}"
+      git config --global user.name "${{parameters.UserName}}"
+      git remote add origin git@github.com:hack3rlife/${{parameters.RepoName}}.git
       git add .
       git commit -m "First Commit"
-      git push -u origin master
+      git push -u origin main
 
 
 
