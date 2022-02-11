@@ -13,6 +13,9 @@ parameters:
   - name: Name
     displayName: "WebAPI Name. (e.g.: BlogWebAPI)"
     type: string
+  - name: reponame
+    displayName: "Repository Name"
+    type: string
 
 steps:
 - script: echo Creating a new WebAPI for ${{parameters.name}}!
@@ -28,6 +31,18 @@ steps:
   inputs:
     command: 'custom'
     custom: 'new'
-    arguments: 'CleanArchitectureNetCoreWebAPI -n tmp\${{parameters.name}} --force'
+    arguments: 'CleanArchitectureNetCoreWebAPI -n ${{parameters.name}} -o tmp --force'
+
+- task: CmdLine@2
+  inputs:
+    script: |
+      cd tmp
+      git init
+      git remote add origin git@github.com:hack3rlife/${{parameters.reponame}}.git
+      git add .
+      git commit -m "First Commit"
+      git push -u origin master
+
+
 
 
