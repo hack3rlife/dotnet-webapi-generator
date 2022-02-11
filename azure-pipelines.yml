@@ -9,11 +9,64 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+parameters:
+  - name: WebApiName
+    displayName: "WebAPI Name. (e.g.: BlogWebAPI)"
+    type: string
+    default: Hack3rLife
+
+  - name: RepoName
+    displayName: "Repository Name"
+    type: string
+    default: dotnet-webapi
+  
+  - name: Email
+    displayName: "Github Email"
+    type: string
+    default: hack3rlifeio@gmail.com
+
+  - name: UserName
+    displayName: "Github UserName"
+    type: string
+    default: hack3rlife
+   
+  - name: PAT
+    displayName: "Github Personal Access Token"
+    type: string
+    
 steps:
-- script: echo Hello, world!
+- script: echo Creating a new WebAPI for ${{parameters.WebApiName}}!
   displayName: 'Run a one-line script'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'custom'
+    custom: 'new'
+    arguments: '--install Hack3rlife.ASP.NETCore.WebAPI'
+    
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'custom'
+    custom: 'new'
+    arguments: 'CleanArchitectureNetCoreWebAPI -n ${{parameters.WebApiName}} -o tmp --force'
+
+- task: CmdLine@2
+  inputs:
+    script: |
+      
+      cd tmp
+      git init -b main
+      git config --global user.email "${{parameters.Email}}"
+      git config --global user.name "${{parameters.UserName}}"
+      git add .
+      git commit -m "Innitial Commit"
+      
+      echo ${{parameters.PAT}} | curl -u ${{parameters.UserName}} https://api.github.com/user/repos -d '{"name":"${{parameters.RepoName}}","private":false}'
+
+      git remote add origin https://${{parameters.UserName}}:${{parameters.PAT}}@github.com/${{parameters.UserName}}/${{parameters.RepoName}}.git
+      
+      git push -u origin main
+
+
+
+
