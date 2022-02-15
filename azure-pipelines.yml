@@ -29,11 +29,6 @@ parameters:
     displayName: "Github UserName"
     type: string
     default: hack3rlife
-   
-  - name: PAT
-    displayName: "Github Personal Access Token"
-    type: string
-    default: "**********"
     
   - name: Organization
     displayName: "Azure DevOps organization URL"
@@ -41,10 +36,6 @@ parameters:
 
   - name: Project
     displayName: "Name or ID of the project"
-    type: string
-  
-  - name: Subscription
-    displayName: "Name or ID of subscription"
     type: string
   
   - name: AZURE_PAT
@@ -70,7 +61,10 @@ steps:
   inputs:
     script: |        
         echo ${{parameters.AZURE_PAT}} | az devops login --org ${{parameters.Organization}}
-        az repos create --name ${{parameters.RepoName}} --org ${{parameters.Organization}} --project ${{parameters.Project}}
+
+        az repos create --name ${{parameters.RepoName}} 
+        --org ${{parameters.Organization}} 
+        --project ${{parameters.Project}}
 
         cd tmp
         git init -b main
@@ -83,6 +77,14 @@ steps:
         
         git push -u origin main
 
+        cd ..
+        rmdir tmp -v --ignore-fail-on-non-empty
 
+        az pipelines create 
+        --name ${{parameters.RepoName}}
+         --repository ${{ parameters.RepoName }}
+         --yml-path azure-pipelines.yml
+         --repository-type tfsgit 
+         --branch main --skip-first-run
 
 
