@@ -68,9 +68,20 @@ steps:
     arguments: 'CleanArchitectureNetCoreWebAPI -n ${{parameters.WebApiName}} -o tmp --force'
 - task: CmdLine@2
   inputs:
-    script: |
+    script: |        
         echo ${{parameters.AZURE_PAT}} | az devops login --org ${{parameters.Organization}}
         az repos create --name ${{parameters.RepoName}} --org ${{parameters.Organization}} --project ${{parameters.Project}}
+
+        cd tmp
+        git init -b main
+        git config --global user.email "${{parameters.Email}}"
+        git config --global user.name "${{parameters.UserName}}"
+        git add .
+        git commit -m "Initial Commit"
+
+        git remote add origin https://${{parameters.UserName}}:${{parameters.AZURE_PAT}}@dev.azure.com/${{parameters.UserName}}/${{parameters.Project}}/_git/${{parameters.RepoName}}
+        
+        git push -u origin main
 
 
 
