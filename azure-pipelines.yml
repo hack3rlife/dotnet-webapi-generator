@@ -18,17 +18,15 @@ parameters:
   - name: RepoName
     displayName: "Repository Name"
     type: string
-    default: dotnet-webapi
+    default: dotnet-cleanarchitecture-webapi
   
   - name: Email
-    displayName: "Github Email"
+    displayName: "Azure DevOps Email"
     type: string
-    default: hack3rlifeio@gmail.com
 
   - name: UserName
-    displayName: "Github UserName"
+    displayName: "Azure DevOps UserName"
     type: string
-    default: hack3rlife
   
   - name: AZURE_PAT
     displayName: "Azure DevOps Personal Access Token"
@@ -51,6 +49,7 @@ steps:
     command: 'custom'
     custom: 'new'
     arguments: 'CleanArchitectureNetCoreWebAPI -n ${{parameters.WebApiName}} -o tmp --force'
+    
 - task: CmdLine@2
   displayName: Creating Repository ${{parameters.RepoName}} for $(Project) Project
   inputs:
