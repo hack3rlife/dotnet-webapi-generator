@@ -42,13 +42,21 @@ jobs:
           cd tmp
           git init -b main        
           
+          echo * * * * * Setting user.email & user.name
           git config --global user.email '${{ github.event.inputs.Email }}'
           git config --global user.name '${{ github.event.inputs.UserName }}'
           
+          echo * * * * * Adding files to be commited * * * * * 
           git add .
-          git commit -m "Initial Commit"
-      
+          
+          echo * * * * * Initial Commit * * * * * 
+          git commit -m 'Initial Commit'
+          
           echo ${{ secrets.HACKERLIFE_PAT }} | curl -u ${{ github.event.inputs.UserName }} https://api.github.com/user/repos -d '{"name":"${{ github.event.inputs.RepoName }}","private":false}'
-          git remote add origin https://github.com/${{ github.event.inputs.UserName }}/${{ github.event.inputs.RepoName }}.git
-      
+          
+          echo * * * * * Adding remote * * * * *
+          git remote add origin https://${{ github.event.inputs.UserName }}:${{ secrets.HACKERLIFE_PAT }}@github.com/${{ github.event.inputs.UserName }}/${{ github.event.inputs.RepoName }}.git
+          git remote -vv
+          
+          echo * * * * * Pushing changes * * * * * 
           git push -u origin main
