@@ -34,6 +34,18 @@ parameters:
     displayName: "Github Personal Access Token"
     type: string
     
+  - name: Organization
+    displayName: "Azure DevOps organization URL"
+    type: string
+
+  - name: Project
+    displayName: "Name or ID of the project"
+    type: string
+  
+  - name: Subscription
+    displayName: "Name or ID of subscription"
+    type: string
+    
 steps:
 - script: echo Creating a new WebAPI for ${{parameters.WebApiName}}!
   displayName: 'Run a one-line script'
@@ -49,23 +61,11 @@ steps:
     command: 'custom'
     custom: 'new'
     arguments: 'CleanArchitectureNetCoreWebAPI -n ${{parameters.WebApiName}} -o tmp --force'
-
 - task: CmdLine@2
   inputs:
     script: |
-      
-      cd tmp
-      git init -b main
-      git config --global user.email "${{parameters.Email}}"
-      git config --global user.name "${{parameters.UserName}}"
-      git add .
-      git commit -m "Innitial Commit"
-      
-      echo ${{parameters.PAT}} | curl -u ${{parameters.UserName}} https://api.github.com/user/repos -d '{"name":"${{parameters.RepoName}}","private":false}'
-
-      git remote add origin https://${{parameters.UserName}}:${{parameters.PAT}}@github.com/${{parameters.UserName}}/${{parameters.RepoName}}.git
-      
-      git push -u origin main
+        cat ${{parameters.AZURE_PAT}} | az devops login --organization ${{parameters.Organization}}
+        az repos create --name ${{parameters.RepoName}} --org ${{parameters.Organization}} 
 
 
 
