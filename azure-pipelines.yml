@@ -39,18 +39,20 @@ steps:
   displayName: 'Run a one-line script'
 
 - task: DotNetCoreCLI@2
+  displayName: Installing Hack3rlife.ASP.NETCore.WebAPI NuGet Package
   inputs:
     command: 'custom'
     custom: 'new'
     arguments: '--install Hack3rlife.ASP.NETCore.WebAPI'
     
 - task: DotNetCoreCLI@2
+  displayName: Creating Project using CleanArchitectureNetCoreWebAPI Template
   inputs:
     command: 'custom'
     custom: 'new'
     arguments: 'CleanArchitectureNetCoreWebAPI -n ${{parameters.WebApiName}} -o tmp --force'
 - task: CmdLine@2
-  displayName: Creating Repository ${{parameters.RepoName}} for organization=$(Organization) project=$(Project)
+  displayName: Creating Repository ${{parameters.RepoName}} for $(Project) Project
   inputs:
     script: |        
         echo ${{ parameters.AZURE_PAT }} | az devops login --org $(Organization)
@@ -73,14 +75,5 @@ steps:
 
         cd ..
         rmdir tmp -v --ignore-fail-on-non-empty
-
-        
-- task: CmdLine@2
-  displayName: Creating build pipeline
-  inputs:
-    script: |
-        az config set extension.use_dynamic_install=yes_without_prompt;
-        az devops configure --defaults organization=$(Organization) project=$(Project);
-        az pipelines create --name '${{ parameters.RepoName }}-ci' --repository ${{ parameters.RepoName }} --repository-type tfsgit --branch main --skip-first-run;
 
                                                                                      
