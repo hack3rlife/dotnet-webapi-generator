@@ -29,44 +29,51 @@ parameters:
     displayName: "Github UserName"
     type: string
     default: hack3rlife
-   
-  - name: PAT
-    displayName: "Github Personal Access Token"
-    type: string
+  
+  - name: AZURE_PAT
+    displayName: "Azure DevOps Personal Access Token"
+    type: string 
     
 steps:
 - script: echo Creating a new WebAPI for ${{parameters.WebApiName}}!
   displayName: 'Run a one-line script'
 
 - task: DotNetCoreCLI@2
+  displayName: Installing Hack3rlife.ASP.NETCore.WebAPI NuGet Package
   inputs:
     command: 'custom'
     custom: 'new'
     arguments: '--install Hack3rlife.ASP.NETCore.WebAPI'
     
 - task: DotNetCoreCLI@2
+  displayName: Creating Project using CleanArchitectureNetCoreWebAPI Template
   inputs:
     command: 'custom'
     custom: 'new'
     arguments: 'CleanArchitectureNetCoreWebAPI -n ${{parameters.WebApiName}} -o tmp --force'
-
 - task: CmdLine@2
+  displayName: Creating Repository ${{parameters.RepoName}} for $(Project) Project
   inputs:
-    script: |
-      
-      cd tmp
-      git init -b main
-      git config --global user.email "${{parameters.Email}}"
-      git config --global user.name "${{parameters.UserName}}"
-      git add .
-      git commit -m "Innitial Commit"
-      
-      echo ${{parameters.PAT}} | curl -u ${{parameters.UserName}} https://api.github.com/user/repos -d '{"name":"${{parameters.RepoName}}","private":false}'
+    script: |        
+        echo ${{ parameters.AZURE_PAT }} | az devops login --org $(Organization)
 
-      git remote add origin https://${{parameters.UserName}}:${{parameters.PAT}}@github.com/${{parameters.UserName}}/${{parameters.RepoName}}.git
-      
-      git push -u origin main
+        az config set extension.use_dynamic_install=yes_without_prompt;
+        az devops configure --defaults organization=$(Organization) project=$(Project);
 
+        az repos create --name ${{ parameters.RepoName }};
 
+        cd tmp
+        git init -b main
+        git config --global user.email "${{ parameters.Email }}"
+        git config --global user.name "${{ parameters.UserName }}"
+        git add .
+        git commit -m "Initial Commit"
 
+        git remote add origin https://${{ parameters.UserName }}:${{ parameters.AZURE_PAT }}@dev.azure.com/${{ parameters.UserName }}/$(Project)/_git/${{ parameters.RepoName }}
+        
+        git push -f -u origin main
 
+        cd ..
+        rmdir tmp -v --ignore-fail-on-non-empty
+
+                                                                                     
