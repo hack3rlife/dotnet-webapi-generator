@@ -15,6 +15,9 @@ on:
         description: 'Github Email'
         required: true
         default: hack3rlifeio@gamil.com
+      PAT:
+        description: 'Github Personal Access Token'
+        required: true
       RepoName:
         description: 'Github Repository Name (to be created)'
         required: true
@@ -54,10 +57,10 @@ jobs:
           echo * * * * * Initial Commit * * * * * 
           git commit -m 'Initial Commit'
           
-          echo ${{ secrets.HACKERLIFE_PAT }} | curl -u ${{ github.event.inputs.UserName }} https://api.github.com/user/repos -d '{"name":"${{ github.event.inputs.RepoName }}","private":false}'
+          echo ${{ github.event.inputs.HACKERLIFE_PAT }} | curl -u ${{ github.event.inputs.UserName }} https://api.github.com/user/repos -d '{"name":"${{ github.event.inputs.RepoName }}","private":false}'
           
           echo * * * * * Adding remote * * * * *
-          git remote add origin https://${{ github.event.inputs.UserName }}:${{ secrets.HACKERLIFE_PAT }}@github.com/${{ github.event.inputs.UserName }}/${{ github.event.inputs.RepoName }}.git
+          git remote add origin https://${{ github.event.inputs.UserName }}:${{ github.event.inputs.HACKERLIFE_PAT }}@github.com/${{ github.event.inputs.UserName }}/${{ github.event.inputs.RepoName }}.git
           git remote -vv
           
           echo * * * * * Pushing changes * * * * * 
