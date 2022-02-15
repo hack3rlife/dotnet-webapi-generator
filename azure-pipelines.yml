@@ -73,10 +73,10 @@ steps:
 
         git remote add origin https://${{parameters.UserName}}:${{parameters.AZURE_PAT}}@dev.azure.com/${{parameters.UserName}}/${{parameters.Project}}/_git/${{parameters.RepoName}}
         
-        git push -u origin main
+        git push -f -u origin main
 
         cd ..
         rmdir tmp -v --ignore-fail-on-non-empty
 
-        az pipelines create --name ${{parameters.RepoName}} --repository ${{ parameters.RepoName }} --project ${{parameters.Project}} --yml-path azure-pipelines.yml --repository-type tfsgit --branch main --skip-first-run
+        az pipelines create --name ${{parameters.RepoName}} --repository ${{ parameters.RepoName }} --project ${{parameters.Project}} --yml-path '/azure-pipelines.yml' --repository-type tfsgit --branch main --skip-first-run
 
