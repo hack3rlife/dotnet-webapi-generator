@@ -62,9 +62,7 @@ steps:
     script: |        
         echo ${{parameters.AZURE_PAT}} | az devops login --org ${{parameters.Organization}}
 
-        az repos create --name ${{parameters.RepoName}} 
-        --org ${{parameters.Organization}} 
-        --project ${{parameters.Project}}
+        az repos create --name ${{parameters.RepoName}} --org ${{parameters.Organization}} --project ${{parameters.Project}}
 
         cd tmp
         git init -b main
@@ -80,11 +78,5 @@ steps:
         cd ..
         rmdir tmp -v --ignore-fail-on-non-empty
 
-        az pipelines create 
-        --name ${{parameters.RepoName}}
-         --repository ${{ parameters.RepoName }}
-         --yml-path azure-pipelines.yml
-         --repository-type tfsgit 
-         --branch main --skip-first-run
-
+        az pipelines create --name ${{parameters.RepoName}} --repository ${{ parameters.RepoName }} --yml-path azure-pipelines.yml --repository-type tfsgit --branch main --skip-first-run
 
