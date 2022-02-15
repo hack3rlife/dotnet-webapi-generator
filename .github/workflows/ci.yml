@@ -64,5 +64,5 @@ jobs:
           git remote -vv
           
           echo * * * * * Pushing changes * * * * * 
-          timeout 5
+          timeout 5 > NUL
           git push -u origin main
