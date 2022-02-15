@@ -10,12 +10,15 @@ on:
       UserName:
         description: 'Github Username'
         required: true
+        default: hack3rlife
       Email:
         description: 'Github Email'
         required: true
+        default: hack3rlifeio@gamil.com
       RepoName:
         description: 'Github Repository Name (to be created)'
         required: true
+        default: test-cleanarch
     
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
