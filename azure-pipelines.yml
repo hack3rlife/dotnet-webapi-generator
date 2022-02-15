@@ -78,5 +78,6 @@ steps:
         cd ..
         rmdir tmp -v --ignore-fail-on-non-empty
 
-        az pipelines create --name ${{parameters.RepoName}}-ci --repository https://dev.azure.com/${{parameters.UserName}}/${{parameters.Project}}/_git/${{parameters.RepoName}} --project ${{parameters.Project}} --yml-path '/ci/azure-pipelines.yml' --repository-type tfsgit --branch main --skip-first-run
+        echo | az pipelines create --name '${{parameters.RepoName}}-ci' --repository https://dev.azure.com/${{parameters.UserName}}/${{parameters.Project}}/_git/${{parameters.RepoName}} --project ${{parameters.Project}} --repository-type tfsgit --branch main --skip-first-run
 
+                                                                                     
