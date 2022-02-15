@@ -66,3 +66,6 @@ jobs:
           echo * * * * * Pushing changes * * * * * 
           sleep 5
           git push -u origin main
+          
+          cd ..
+          rmdir -v --ignore-fail-on-non-empty
