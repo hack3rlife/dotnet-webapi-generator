@@ -42,10 +42,13 @@ jobs:
           cd tmp
           git init -b main        
           
+          git config --global user.email "${{ github.event.inputs.Email }}"
+          git config --global user.name "${{ github.event.inputs.UserName }}"
+          
           git add .
           git commit -m "Initial Commit"
       
-          echo ${{ secrets.HACKERLIFE_PAT }} | curl -u ${{ inputs.UserName }} https://api.github.com/user/repos -d '{"name":"${{ inputs.RepoName }}","private":false}'
-          git remote add origin https://${{ inputs.UserName }}:${{ secrets.HACKERLIFE_PAT }}@github.com/${{ inputs.UserName }}/${{ inputs.RepoName }}.git
+          echo ${{ secrets.HACKERLIFE_PAT }} | curl -u ${{ github.event.inputs.UserName }} https://api.github.com/user/repos -d '{"name":"${{ github.event.inputs.RepoName }}","private":false}'
+          git remote add origin https://${{ github.event.inputs.UserName }}:${{ secrets.HACKERLIFE_PAT }}@github.com/${{ github.event.inputs.UserName }}/${{ github.event.inputs.RepoName }}.git
       
           git push -u origin main
