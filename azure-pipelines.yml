@@ -45,6 +45,10 @@ parameters:
   - name: Subscription
     displayName: "Name or ID of subscription"
     type: string
+  
+  - name: AZURE_PAT
+    displayName: "Azure DevOps Personal Access Token"
+    type: string
     
 steps:
 - script: echo Creating a new WebAPI for ${{parameters.WebApiName}}!
