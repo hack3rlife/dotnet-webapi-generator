@@ -45,7 +45,6 @@ jobs:
           cd tmp
           git init -b main        
           
-          echo * * * * * Setting usermail & username * * * * *
           git config --global user.email '${{ github.event.inputs.Email }}'
           git config --global user.name '${{ github.event.inputs.UserName }}'
           
