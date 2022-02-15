@@ -44,7 +44,7 @@ jobs:
         run: dotnet new --install Hack3rlife.ASP.NETCore.WebAPI
         
       - name: Create Clean Architecture Template
-        run: dotnet new CleanArchitectureNetCoreWebAPI -n Test -o tmp --force
+        run: dotnet new CleanArchitectureNetCoreWebAPI -n ${{ github.event.inputs.ProjectName }} -o tmp --force
        
       # Runs a set of commands using the runners shell
       - name: Create Githib Repository
