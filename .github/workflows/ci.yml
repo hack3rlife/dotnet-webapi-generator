@@ -40,10 +40,7 @@ jobs:
       - name: Create Githib Repository
         run: |
           cd tmp
-          git init -b main
-          
-          git config --global user.email '${{ inputs.Email }}'
-          git config --global user.name '${{ inputs.UserName }}'
+          git init -b main        
           
           git add .
           git commit -m "Initial Commit"
