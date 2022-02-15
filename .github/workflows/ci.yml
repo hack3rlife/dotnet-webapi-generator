@@ -47,6 +47,6 @@ jobs:
           git commit -m "Initial Commit"
       
           echo ${{secrets.HACKERLIFE_PAT}} | curl -u ${{inputs.UserName}} https://api.github.com/user/repos -d '{"name":"${{inputs.RepoName}}","private":false}'
-          git remote add origin https://${{parameters.UserName}}:${{secrets.PAT}}@github.com/${{inputs.UserName}}/${{parameters.RepoName}}.git
+          git remote add origin https://${{inputs.UserName}}:${{secrets.PAT}}@github.com/${{inputs.UserName}}/${{inputs.RepoName}}.git
       
           git push -u origin main
