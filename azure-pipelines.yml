@@ -33,7 +33,7 @@ parameters:
   - name: PAT
     displayName: "Github Personal Access Token"
     type: string
-    default:
+    default: "**********"
     
   - name: Organization
     displayName: "Azure DevOps organization URL"
@@ -69,7 +69,7 @@ steps:
 - task: CmdLine@2
   inputs:
     script: |
-        cat ${{parameters.AZURE_PAT}} | az devops login --org ${{parameters.Organization}} --subscription ${{parameters.Subscription}}
+        echo ${{parameters.AZURE_PAT}} | az devops login --org ${{parameters.Organization}} --subscription ${{parameters.Subscription}}
         az repos create --name ${{parameters.RepoName}} --org ${{parameters.Organization}} 
 
 
