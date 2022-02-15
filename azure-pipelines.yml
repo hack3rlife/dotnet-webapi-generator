@@ -70,7 +70,7 @@ steps:
   inputs:
     script: |
         echo ${{parameters.AZURE_PAT}} | az devops login --org ${{parameters.Organization}}
-        az repos create --name ${{parameters.RepoName}} --org ${{parameters.Organization}} 
+        az repos create --name ${{parameters.RepoName}} --org ${{parameters.Organization}} --project ${{parameters.Project}}
 
 
 
