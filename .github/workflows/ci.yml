@@ -18,10 +18,14 @@ on:
       PAT:
         description: 'Github Personal Access Token'
         required: true
+      ProjectName:
+        description: 'Project Name'
+        required: true
+        default: CleanArch
       RepoName:
         description: 'Github Repository Name (to be created)'
         required: true
-        default: test-cleanarch
+        default: cleanarchitecture-webapi
     
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
