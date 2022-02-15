@@ -82,4 +82,4 @@ steps:
     script: |
         az config set extension.use_dynamic_install=yes_without_prompt;
         az devops configure --defaults organization=$(Organization) project=$(Project);
-        az pipelines create --name '${{ parameters.RepoName }}-ci' --repository https://${{ parameters.UserName }}@dev.azure.com/${{ parameters.UserName }}/$(Project)/_git/${{ parameters.RepoName }} --repository-type tfsgit --branch main --skip-first-run;
+        az pipelines create --name '${{ parameters.RepoName }}-ci' --repository https://${{ parameters.UserName }}@dev.azure.com/${{ parameters.UserName }}/$(Project)/_git/${{ parameters.RepoName }} --yml-path azure-pipelines.yml --repository-type tfsgit --branch main --skip-first-run;
